@@ -1,23 +1,23 @@
-'use client';
+"use client";
 
-import Input from '@/components/input';
-import Select from '@/components/select';
-import Wraper from '@/components/wraper';
-import { useFormik } from 'formik';
-import { useRouter } from 'next/navigation';
+import Input from "@/components/input";
+import Select from "@/components/select";
+import Wraper from "@/components/wraper";
+import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
   const { handleSubmit } = useFormik({
     initialValues: {
-      trainingCenter: '',
-      medium: '',
-      firstName: '',
-      lastName: '',
+      trainingCenter: "",
+      medium: "",
+      firstName: "",
+      lastName: "",
     },
     onSubmit: (values) => {
       console.log(values);
-      router.push('/payment');
+      router.push("/payment");
     },
   });
   return (
@@ -26,7 +26,7 @@ export default function Home() {
         <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-white md:text-5xl lg:text-6xl">
           <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
             Registration
-          </span>{' '}
+          </span>{" "}
           Form
         </h1>
       </div>
@@ -109,6 +109,7 @@ export default function Home() {
             name="s/oOrW/oD/o"
           />
         </div>
+
         {/* Docs Upload */}
 
         <div className="mb-6">
@@ -123,12 +124,12 @@ export default function Home() {
           <Input
             type="text"
             label="Nationality"
-            value={'India'}
+            value={"India"}
             placeholder="Your Nationality"
           />
         </div>
         <div className="mb-6">
-          <Wraper label="Your message">
+          <Wraper label="Residential Address">
             <textarea
               id="message"
               rows={4}
@@ -172,7 +173,31 @@ export default function Home() {
             pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}"
           />
         </div>
-        <div className="grid gap-6  mb-6">
+        <div className="mb-6">
+          <Wraper label="10th Qualified?">
+            <div className="flex flex-row items-center gap-4 ">
+              <div className="flex items-center">
+                <Input type="radio" className="w-4 h-4" />
+                <label
+                  htmlFor="default-radio-1"
+                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Male
+                </label>
+              </div>
+              <div className="flex items-center">
+                <Input type="radio" className="w-4 h-4" />
+                <label
+                  htmlFor="default-radio-2"
+                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Female
+                </label>
+              </div>
+            </div>
+          </Wraper>
+        </div>
+        <div className="grid gap-6 mb-6">
           <Input
             label="10th certificate"
             type="file"
@@ -185,6 +210,7 @@ export default function Home() {
           />
           <Input label="Signature" type="file" placeholder="Signature" />
         </div>
+
         <div className="flex items-start mb-6">
           <div className="flex items-center h-5">
             <input
@@ -199,7 +225,7 @@ export default function Home() {
             htmlFor="remember"
             className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
-            I agree with the{' '}
+            I agree with the{" "}
             <a
               href="#"
               className="text-blue-600 hover:underline dark:text-blue-500"
@@ -210,6 +236,7 @@ export default function Home() {
           </label>
         </div>
         <button
+        
           type="submit"
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >

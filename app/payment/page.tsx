@@ -1,5 +1,5 @@
-import Input from '@/components/input';
-import React from 'react';
+import Input from "@/components/input";
+import React from "react";
 
 const PaymentPage = () => {
   return (
@@ -18,7 +18,7 @@ const PaymentPage = () => {
       <div className="inline-flex items-center justify-center w-full">
         <hr className="w-64 h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700" />
         <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">
-          or
+          then
         </span>
       </div>
 
