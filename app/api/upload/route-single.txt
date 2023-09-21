@@ -1,0 +1,58 @@
+import slugify from 'slugify';
+import { Readable } from 'stream';
+import { randomBytes } from 'crypto';
+import { NextResponse } from 'next/server';
+import { connectToMongo, fileExists } from '@/lib/mongo';
+
+export async function POST(req: Request) {
+  const { bucket } = await connectToMongo();
+  const data = await req.formData();
+  const [key, file] = Array.from(data.entries())[0] as [string, File];
+  const isFile = typeof file == 'object';
+
+  if (isFile) {
+    const blob = file as Blob;
+    const nameWithoutExtension = key.split('.')[0];
+    const slug = slugify(nameWithoutExtension, {
+      lower: true,
+      strict: true,
+    });
+    const filename = filenames(blob.type, slug);
+
+    console.log({ filename });
+    const existing = await fileExists(filename);
+    if (existing) {
+      // If file already exists, let's skip it.
+      // If you want a different behavior such as override, modify this part.
+      return NextResponse.json({ message: 'File already exists' });
+    }
+
+    //conver the blob to stream
+    const buffer = Buffer.from(await blob.arrayBuffer());
+    const stream = Readable.from(buffer);
+
+    const uploadStream = bucket.openUploadStream(filename, {
+      // make sure to add content type so that it will be easier to set later.
+      contentType: blob.type,
+      // metadata: req.body, //add your metadata here if any
+    });
+
+    // pipe the readable stream to a writeable stream to save it to the database
+    stream.pipe(uploadStream);
+    const xx = await bucket.find({ filename });
+    console.log({ xx });
+    return NextResponse.json({ message: 'File uploaded' });
+  }
+  // return the response after all the entries have been processed.
+}
+
+const filenames = (type: string, original?: string) => {
+  const types = [
+    ['image/png', 'png'],
+    ['image/jpeg', 'jpeg'],
+    ['image/webp', 'webp'],
+  ];
+  const ext = types.find((t) => t[0] === type)?.[1] || 'png';
+  const str = randomBytes(16).toString('hex');
+  return original ? `${original}-${str}.${ext}` : `${str}.${ext}`;
+};
