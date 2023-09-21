@@ -9,17 +9,16 @@ type Params = {
 /**
  * For getting a single document
  */
-export async function GET(request: Request, { params }: Params) {
+export async function GET(_request: Request, { params }: Params) {
+  console.log({ params });
   const { client } = await connectToMongo();
   try {
-    const body = await request.json();
-    const response = client.db().collection(collection).findOne({
-      number: params.number,
+    const response = await client.db().collection(collection).findOne({
+      registrationNumber: params.number,
     });
     return NextResponse.json({
       message: 'success',
       response,
-      body,
     });
   } catch (error) {
     return NextResponse.json(error);
