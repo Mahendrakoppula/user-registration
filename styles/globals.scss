@@ -7,19 +7,14 @@
   --background: #fff;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color: #fff;
-    --background: #000;
-  }
-}
+// @media (prefers-color-scheme: dark) {
+//   :root {
+//     --color: #fff;
+//     --background: #000;
+//   }
+// }
 
 body {
   color: rgb(var(--color));
   background: rgb(var(--background));
-}
-
-body,
-html {
-  color-scheme: dark;
 }

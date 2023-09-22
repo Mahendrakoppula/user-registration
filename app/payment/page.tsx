@@ -95,14 +95,14 @@ const PaymentPage = () => {
           src={'/qr-codes/phone-pay.jpg'}
           alt="image description"
         />
-        <figcaption className="mt-2 text-base text-center text-gray-500 dark:text-gray-400">
+        <figcaption className="mt-2 text-base text-center text-gray-500 ">
           Scan the QR Code for payment
         </figcaption>
       </figure>
 
       <div className="inline-flex items-center justify-center w-full">
-        <hr className="w-64 h-1 my-8 bg-gray-200 border-0 rounded dark:bg-gray-700" />
-        <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2 dark:text-white dark:bg-gray-900">
+        <hr className="w-64 h-1 my-8 bg-gray-200 border-0 rounded " />
+        <span className="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-white left-1/2">
           then
         </span>
       </div>
@@ -134,16 +134,16 @@ const PaymentPage = () => {
 
         <button
           type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
         >
           {loading ? 'Submitting...' : 'Submit'}
         </button>
       </form>
-      {/* <p className="text-lg text-center text-gray-500 dark:text-gray-400">
+      {/* <p className="text-lg text-center text-gray-500 ">
         Do you want to register for the next batch?{' '}
         <Link
           href={'/registration'}
-          className="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline"
+          className="inline-flex items-center font-medium text-blue-600  hover:underline"
         >
           Register now
           <svg
