@@ -230,7 +230,27 @@ export default function Home() {
         }}
       >
         <div className="grid gap-6 mb-6 md:grid-cols-2">
-          <Input
+          <div className="mb-6">
+            <Select
+              label="Training center"
+              name="trainingCenter"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.trainingCenter}
+            >
+              {trainingCenters.map((item, index) => (
+                <option key={index} value={item.name}>
+                  {item.name}
+                </option>
+              ))}
+            </Select>
+            {touched.trainingCenter && errors.trainingCenter && (
+              <div className="flex  w-full mt-2 ">
+                <p className="text-red-500 text-sm">{errors.trainingCenter}</p>
+              </div>
+            )}
+          </div>
+          {/* <Input
             type="text"
             name="trainingCenter"
             label="Training center"
@@ -240,7 +260,7 @@ export default function Home() {
             onBlur={handleBlur}
             value={values.trainingCenter}
             error={touched.trainingCenter && errors.trainingCenter}
-          />
+          /> */}
           <Input
             type="text"
             name="medium"
@@ -604,3 +624,27 @@ export default function Home() {
     </main>
   );
 }
+
+// Hyderabad
+// Tirupati
+// Kurnool
+// Chilakaluripeta
+// Nidadavolu
+
+const trainingCenters = [
+  {
+    name: 'Hyderabad',
+  },
+  {
+    name: 'Tirupati',
+  },
+  {
+    name: 'Kurnool',
+  },
+  {
+    name: 'Chilakaluripeta',
+  },
+  {
+    name: 'Nidadavolu',
+  },
+];
