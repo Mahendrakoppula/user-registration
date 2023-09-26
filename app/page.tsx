@@ -81,7 +81,9 @@ export default function Home() {
       case 'paymentStatus':
         return value === PaymentStatus.PENDING
           ? 'Your application is under review'
-          : 'Your application is approved';
+          : value === PaymentStatus.APPORVED
+          ? 'Your application is approved'
+          : 'Your application is under review';
       case 'isMetricPass':
         return value === true ? 'Yes' : 'No';
       case 'churchMembership':

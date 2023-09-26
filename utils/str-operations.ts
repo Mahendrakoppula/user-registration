@@ -9,3 +9,9 @@ export const acceptNumbers = (value: string) => {
   const regex = new RegExp(/^[0-9]*$/);
   return regex.test(value);
 };
+
+export const removeSpace = (value: string) => {
+  // Accept only string
+  const regex = new RegExp(/\s/g);
+  return value.replace(regex, '');
+};

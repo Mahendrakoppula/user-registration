@@ -1,3 +1,6 @@
+export const maxDuration = 5; // This function can run for a maximum of 5 seconds
+export const dynamic = 'force-dynamic';
+
 import { Readable } from 'stream';
 import { NextResponse } from 'next/server';
 import { connectToMongo, fileExists } from '@/lib/mongo';

@@ -12,7 +12,11 @@ import Select from '@/components/select';
 import Wraper from '@/components/wraper';
 import { useRouter } from 'next/navigation';
 import moment from 'moment';
-import { acceptNumbers, acceptString } from '@/utils/str-operations';
+import {
+  acceptNumbers,
+  acceptString,
+  removeSpace,
+} from '@/utils/str-operations';
 import { PaymentStatus } from '@/typings/payment';
 
 const characters = Array.from({ length: 10 }, (_, i) => i).join('');
@@ -23,7 +27,7 @@ const initialState = {
   loading: false,
   //
   trainingCenter: 'Hyderabad',
-  medium: '',
+  medium: 'English',
   firstName: '',
   lastName: '',
   gender: '',
@@ -66,18 +70,19 @@ const schema = Yup.object().shape({
       moment(new Date()).subtract(18, 'years').format('YYYY-MM-DD'),
       'You should be 18 years old'
     )
-    .min(
-      // Member shold be 18 above
-      moment(new Date()).subtract(30, 'years').format('YYYY-MM-DD'),
-      'You should be 40 years old'
-    )
+
     .required('Date of birth is required'),
   relation: Yup.string().required('Relation is required'),
   residentialAddress: Yup.string().required('Residential address is required'),
   // churchMembership: Yup.string().required('Church membership is required'),
   // pastorName: Yup.string().required('Pastor name is required'),
-  contactNumber: Yup.string().required('Contact number is required'),
-  // alternateNumber: Yup.string().required('Required'),
+  contactNumber: Yup.string()
+    .min(10, 'Contact at least 10 digits')
+    .max(11, 'Landline number should be 11 digits')
+    .required('Contact number is required'),
+  alternateNumber: Yup.string()
+    .min(10, 'Alternate number at least 10 digits')
+    .max(11, 'Landline number should be 11 digits'),
   educationQualification: Yup.string().required(
     'Education Qualification is required'
   ),
@@ -311,7 +316,7 @@ export default function Home() {
             placeholder="John"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.firstName}
+            value={removeSpace(values.firstName)}
             error={touched.firstName && errors.firstName}
           />
           <Input
@@ -322,7 +327,7 @@ export default function Home() {
             placeholder="Doe"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.lastName}
+            value={removeSpace(values.lastName)}
             error={touched.lastName && errors.lastName}
           />
         </div>
@@ -334,7 +339,7 @@ export default function Home() {
             name="email"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.email}
+            value={removeSpace(values.email)}
             error={touched.email && errors.email}
           />
         </div>
@@ -351,13 +356,13 @@ export default function Home() {
           />
           <Input
             type="text"
-            label="S/o or W/o D/o"
+            label="Relation"
             id="s/o_or_w/o_d/o"
-            placeholder="S/o or W/o D/o"
+            placeholder="S/o or W/o or D/o"
             name="relation"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={values.relation}
+            value={removeSpace(values.relation)}
             error={touched.relation && errors.relation}
           />
         </div>
@@ -445,7 +450,7 @@ export default function Home() {
               id="message"
               rows={4}
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-              placeholder="Write your thoughts here..."
+              placeholder="Your residential address"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.residentialAddress}
@@ -483,7 +488,7 @@ export default function Home() {
           />
 
           <Input
-            type="tel"
+            type="text"
             label="Contact Number"
             placeholder="Contact Number"
             name="contactNumber"
@@ -495,9 +500,10 @@ export default function Home() {
             onBlur={handleBlur}
             value={values.contactNumber}
             error={touched.contactNumber && errors.contactNumber}
+            maxLength={11}
           />
           <Input
-            type="tel"
+            type="text"
             label="Alternate Number"
             placeholder="Alternate Number"
             name="alternateNumber"
@@ -509,6 +515,7 @@ export default function Home() {
             onBlur={handleBlur}
             value={values.alternateNumber}
             error={touched.alternateNumber && errors.alternateNumber}
+            maxLength={11}
           />
           <Input
             type="text"
@@ -580,11 +587,14 @@ export default function Home() {
             name="idProof"
             label="Id Proof( Aadhar/Driving license/Passsport )"
             placeholder="Id Proof( Aadhar/Driving license/Passsport )"
-            caption="PNG, JPG, WEBP up to 10MB"
-            accept="image/png, image/jpeg, image/jpg, image/webp"
+            caption="Supported formats: pdf, doc, docx, jpg, jpeg, png. Max file size 2Mb"
+            accept="image/png, image/jpeg, image/jpg, image/webp, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             onChange={({ target }) => {
-              if (target.files) {
-                setFieldValue(target.name, target.files[0]);
+              const file = (target.files && target.files[0]) as File;
+              if (checkFileSize(file, 'File size should be less than 2MB')) {
+                if (file) {
+                  setFieldValue(target.name, file);
+                }
               }
             }}
             error={touched.idProof && errors.idProof}
@@ -595,8 +605,11 @@ export default function Home() {
             label="10th certificate"
             placeholder="10th certificate"
             onChange={({ target }) => {
-              if (target.files) {
-                setFieldValue(target.name, target.files[0]);
+              const file = (target.files && target.files[0]) as File;
+              if (checkFileSize(file, 'File size should be less than 2MB')) {
+                if (file) {
+                  setFieldValue(target.name, file);
+                }
               }
             }}
             accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/jpeg, image/png"
@@ -609,8 +622,11 @@ export default function Home() {
             label="PassPort size photo"
             placeholder="PassPort size photo"
             onChange={({ target }) => {
-              if (target.files) {
-                setFieldValue(target.name, target.files[0]);
+              const file = (target.files && target.files[0]) as File;
+              if (checkFileSize(file, 'File size should be less than 2MB')) {
+                if (file) {
+                  setFieldValue(target.name, file);
+                }
               }
             }}
             accept="image/png, image/jpeg, image/jpg, image/webp"
@@ -623,8 +639,11 @@ export default function Home() {
             type="file"
             placeholder="Signature"
             onChange={({ target }) => {
-              if (target.files) {
-                setFieldValue(target.name, target.files[0]);
+              const file = (target.files && target.files[0]) as File;
+              if (checkFileSize(file, 'File size should be less than 2MB')) {
+                if (file) {
+                  setFieldValue(target.name, file);
+                }
               }
             }}
             accept="image/png, image/jpeg, image/jpg, image/webp"
@@ -641,7 +660,6 @@ export default function Home() {
               name="accept"
               onChange={({ target }) => {
                 setFieldValue('accept', target.checked);
-                // console.log(target.checked);
               }}
               checked={values.accept}
               className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
@@ -702,3 +720,12 @@ const trainingCenters = [
     name: 'Nidadavolu',
   },
 ];
+
+const checkFileSize = (file: File, message: string) => {
+  if (!file) return false;
+  if (file.size > 2000000) {
+    alert(message);
+    return false;
+  }
+  return true;
+};
