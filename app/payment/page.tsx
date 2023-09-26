@@ -11,7 +11,6 @@ import useLoading from '@/hooks/use-loading';
 import { useRouter } from 'next/navigation';
 import CopyIcon from '@/components/icons/CopyIcon';
 import CheckIcon from '@/components/icons/CheckIcon';
-import { PaymentStatus } from '@/typings/payment';
 
 type State = {
   paymentScreenshot: File | null;
@@ -61,7 +60,7 @@ const PaymentPage = () => {
             url: `/api/registration/${registration}`,
             data: {
               paymentScreenshot: url,
-              paymentStatus: PaymentStatus.APPORVED,
+              // paymentStatus: PaymentStatus.APPORVED,
             },
           });
           console.log('Payment Screenshot Uploaded', data);
