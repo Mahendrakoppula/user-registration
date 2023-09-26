@@ -283,28 +283,26 @@ export default function Home() {
               </div>
             )}
           </div>
-          {/* <Input
-            type="text"
-            name="trainingCenter"
-            label="Training center"
-            id="training_center"
-            placeholder="Training center"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.trainingCenter}
-            error={touched.trainingCenter && errors.trainingCenter}
-          /> */}
-          <Input
-            type="text"
-            name="medium"
-            label="Medium"
-            id="medium"
-            placeholder="Medium"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.medium}
-            error={touched.medium && errors.medium}
-          />
+          <div className="mb-6">
+            <Select
+              label="Medium"
+              name="medium"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.medium}
+            >
+              {['English', 'Telugu'].map((item, index) => (
+                <option key={index} value={item}>
+                  {item}
+                </option>
+              ))}
+            </Select>
+            {touched.medium && errors.medium && (
+              <div className="flex  w-full mt-2 ">
+                <p className="text-red-500 text-sm">{errors.medium}</p>
+              </div>
+            )}
+          </div>
           <Input
             type="text"
             name="firstName"

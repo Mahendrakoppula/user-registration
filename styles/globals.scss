@@ -18,3 +18,47 @@ body {
   color: rgb(var(--color));
   background: rgb(var(--background));
 }
+
+// FOR SELECT ELEMENTS
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='none' d='M0 0h24v24H0z'%3E%3C/path%3E%3Cpath d='M18.2073 9.04304 12.0002 2.83594 5.79312 9.04304 7.20733 10.4573 12.0002 5.66436 16.7931 10.4573 18.2073 9.04304ZM5.79297 14.9574 12.0001 21.1646 18.2072 14.9574 16.793 13.5432 12.0001 18.3361 7.20718 13.5432 5.79297 14.9574Z'%3E%3C/path%3E%3C/svg%3E");
+  border-radius: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: rgb(var(--color));
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+  background-size: 1rem;
+}
+
+// RADIO FOR SAFARI ONLY
+@supports (-webkit-appearance: none) {
+  input[type='radio'] {
+    height: 15px;
+    width: 15px;
+  }
+}
+
+input[type='file']::file-selector-button {
+  padding: 0.2em 0.4em;
+  border-radius: 0.4em;
+  border: 2px solid #6c5ce7;
+  background-color: #a29bfe;
+  transition: 1s;
+  @apply bg-blue-100 border-blue-500;
+}
+
+input[type='date']::-webkit-calendar-picker-indicator {
+  color: rgba(0, 0, 0, 0);
+  opacity: 1;
+  display: block;
+  background: url('data:image/svg+xml;base64,CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBjbGFzcz0iaW9uaWNvbiIgdmlld0JveD0iMCAwIDUxMiA1MTIiPjxyZWN0IGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjMyIiB4PSI0OCIgeT0iODAiIHdpZHRoPSI0MTYiIGhlaWdodD0iMzg0IiByeD0iNDgiLz48Y2lyY2xlIGN4PSIyOTYiIGN5PSIyMzIiIHI9IjI0Ii8+PGNpcmNsZSBjeD0iMzc2IiBjeT0iMjMyIiByPSIyNCIvPjxjaXJjbGUgY3g9IjI5NiIgY3k9IjMxMiIgcj0iMjQiLz48Y2lyY2xlIGN4PSIzNzYiIGN5PSIzMTIiIHI9IjI0Ii8+PGNpcmNsZSBjeD0iMTM2IiBjeT0iMzEyIiByPSIyNCIvPjxjaXJjbGUgY3g9IjIxNiIgY3k9IjMxMiIgcj0iMjQiLz48Y2lyY2xlIGN4PSIxMzYiIGN5PSIzOTIiIHI9IjI0Ii8+PGNpcmNsZSBjeD0iMjE2IiBjeT0iMzkyIiByPSIyNCIvPjxjaXJjbGUgY3g9IjI5NiIgY3k9IjM5MiIgcj0iMjQiLz48cGF0aCBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIgc3Ryb2tlLXdpZHRoPSIzMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBkPSJNMTI4IDQ4djMyTTM4NCA0OHYzMiIvPjxwYXRoIGZpbGw9Im5vbmUiIHN0cm9rZT0iY3VycmVudENvbG9yIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBzdHJva2Utd2lkdGg9IjMyIiBkPSJNNDY0IDE2MEg0OCIvPjwvc3ZnPg==')
+    no-repeat;
+  width: 16px;
+  height: 16px;
+  border-width: thin;
+  opacity: 0.7;
+}
