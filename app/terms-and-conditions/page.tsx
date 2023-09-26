@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className=" flex  items-center justify-center h-32">
+    <React.Fragment>
+      <div className="flex items-center justify-center h-32">
         <h1 className="mb-4 text-3xl font-extrabold text-gray-900 md:text-5xl lg:text-6xl">
           <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
             Terms and
@@ -26,6 +26,6 @@ export default function Home() {
           dolorum assumenda amet?
         </p>
       </div>
-    </main>
+    </React.Fragment>
   );
 }

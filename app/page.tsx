@@ -1,11 +1,13 @@
-"use client";
-import LiveIcon from "@/components/live-badge";
-import useLoading from "@/hooks/use-loading";
-import axios from "axios";
-import { useFormik } from "formik";
-import Link from "next/link";
-import React from "react";
-import * as Yup from "yup";
+'use client';
+import LiveIcon from '@/components/live-badge';
+import useLoading from '@/hooks/use-loading';
+import { PaymentStatus } from '@/typings/payment';
+import axios from 'axios';
+import { useFormik } from 'formik';
+import moment from 'moment';
+import Link from 'next/link';
+import React from 'react';
+import * as Yup from 'yup';
 type State = {
   number: string;
 };
@@ -35,11 +37,11 @@ export default function Home() {
 
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues: {
-      number: "",
+      number: '',
     },
     onSubmit: onSubmit,
     validationSchema: Yup.object().shape({
-      number: Yup.string().required("Please enter your registration number"),
+      number: Yup.string().required('Please enter your registration number'),
     }),
   });
 
@@ -48,11 +50,18 @@ export default function Home() {
   const response = React.useMemo(() => {
     if (state) {
       //   delete fields from object
-      const excludeField = Object.fromEntries(
-        Object.entries(state).filter(([key, value]) => {
-          return !["_id", "accept"].includes(key);
+
+      const excludeFieldArray = Object.entries(state)
+        .filter(([key, value]) => {
+          return !['_id', 'accept'].includes(key);
         })
-      );
+        .sort((a, b) => {
+          if (a[0] === 'lastModified') return 1;
+          if (b[0] === 'lastModified') return -1;
+          return 0;
+        });
+
+      const excludeField = Object.fromEntries(excludeFieldArray);
       return Object.entries(excludeField);
     } else {
       return [];
@@ -61,19 +70,52 @@ export default function Home() {
 
   const textStatus = React.useMemo(() => {
     if (response.length > 0) {
-      return "No Result Found";
+      return 'No Result Found';
     }
 
-    return "Get your application status by entering your registration number";
+    return 'Get your application status by entering your registration number';
   }, [response.length]);
 
+  const Conditional = React.useCallback((key: any, value: any) => {
+    switch (key) {
+      case 'paymentStatus':
+        return value === PaymentStatus.PENDING
+          ? 'Your application is under review'
+          : 'Your application is approved';
+      case 'isMetricPass':
+        return value === true ? 'Yes' : 'No';
+      case 'churchMembership':
+        return value === true ? 'Yes' : 'No';
+      case 'lastModified':
+        return (
+          <span className="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded-full">
+            <span className="w-2 h-2 mr-1 bg-green-500 rounded-full"></span>
+            {moment(value).format('ddd DD MMM YYYY, h:mm:ss a')}
+          </span>
+        );
+      default:
+        return isUrl(value) ? (
+          <a
+            href={value as string}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:text-blue-600"
+          >
+            View
+          </a>
+        ) : (
+          value
+        );
+    }
+  }, []);
+
   return (
-    <main className="flex max-w-screen-md mx-auto min-h-screen flex-col p-24 gap-10">
+    <React.Fragment>
       <div className="flex  items-center justify-center h-32">
         <h1 className="text-center mb-4 text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-6xl">
           <span className=" text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
             Check Your
-          </span>{" "}
+          </span>{' '}
           Application Status
         </h1>
       </div>
@@ -145,8 +187,6 @@ export default function Home() {
               </thead>
               <tbody>
                 {response.map(([key, value], index) => {
-                  console.log(key, isUrl(value));
-
                   return (
                     <tr
                       key={index}
@@ -158,20 +198,7 @@ export default function Home() {
                       >
                         {key}
                       </th>
-                      <td className="px-6 py-4">
-                        {isUrl(value) ? (
-                          <a
-                            href={value as string}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 hover:text-blue-600"
-                          >
-                            View
-                          </a>
-                        ) : (
-                          isBoolean(value as any)
-                        )}
-                      </td>
+                      <td className="px-6 py-4">{Conditional(key, value)}</td>
                     </tr>
                   );
                 })}
@@ -181,18 +208,16 @@ export default function Home() {
         </div>
       ) : (
         textStatus && (
-          <div className="flex items-center justify-center w-full h-10  text-sm border-dotted border-2 border-gray-200 rounded-md">
-            <p className="text-center text-gray-900">
-              {textStatus}
-            </p>
+          <div className="flex items-center justify-center w-full h-10 text-sm border-dotted border-2 border-gray-100 rounded-md">
+            <p className="text-center text-gray-900">{textStatus}</p>
           </div>
         )
       )}
       {/* Footer */}
       <p className="text-lg text-center text-gray-500">
-        Do you want to register for the next batch?{" "}
+        Do you want to register for the next batch?{' '}
         <Link
-          href={"/registration"}
+          href={'/registration'}
           className="inline-flex items-center font-medium text-blue-600 hover:underline"
         >
           Register now
@@ -213,7 +238,7 @@ export default function Home() {
           </svg>
         </Link>
       </p>
-    </main>
+    </React.Fragment>
   );
 }
 
@@ -223,9 +248,7 @@ const Loader = () => {
   return (
     <div className="relative flex flex-col gap-4 items-center justify-center min-h-[200px]">
       <LiveIcon />
-      <p className="text-sm  text-center text-gray-900 ">
-        Loading...
-      </p>
+      <p className="text-sm  text-center text-gray-900 ">Loading...</p>
     </div>
   );
 };
@@ -235,12 +258,12 @@ function isUrl(string: any) {
   return regex.test(string);
 }
 
-const isBoolean = (value: boolean) => {
-  if (value === true) {
-    return "Yes";
-  }
-  if (value === false) {
-    return "No";
-  }
-  return value;
-};
+// const isBoolean = (key: boolean, value: boolean) => {
+//   if (value === true) {
+//     return 'Yes';
+//   }
+//   if (value === false) {
+//     return 'No';
+//   }
+//   return value;
+// };

@@ -11,21 +11,27 @@ import { customAlphabet } from 'nanoid';
 import Select from '@/components/select';
 import Wraper from '@/components/wraper';
 import { useRouter } from 'next/navigation';
+import moment from 'moment';
+import { acceptNumbers, acceptString } from '@/utils/str-operations';
+import { PaymentStatus } from '@/typings/payment';
 
 const characters = Array.from({ length: 10 }, (_, i) => i).join('');
 
-const generator = customAlphabet(characters, 10);
+const generator = customAlphabet(characters, 4);
 
 const initialState = {
   loading: false,
   //
-  trainingCenter: '',
+  trainingCenter: 'Hyderabad',
   medium: '',
   firstName: '',
   lastName: '',
   gender: '',
-  bloodGroup: '',
-  dateOfBirth: new Date().toISOString().split('T')[0],
+  bloodGroup: 'A+',
+  // 18 years old
+  dateOfBirth: new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+    .toISOString()
+    .split('T')[0],
   relation: '',
   residentialAddress: '',
   churchMembership: '',
@@ -46,10 +52,57 @@ const initialState = {
 };
 
 type State = typeof initialState;
+
+const schema = Yup.object().shape({
+  trainingCenter: Yup.string().required('Training center is required'),
+  medium: Yup.string().required('Medium is required'),
+  firstName: Yup.string().required('First name is required'),
+  lastName: Yup.string().required('Last name is required'),
+  gender: Yup.string().required('Gender is required'),
+  bloodGroup: Yup.string().required('Blood group is required'),
+  dateOfBirth: Yup.date()
+    .max(
+      // Member shold be 18 above
+      moment(new Date()).subtract(18, 'years').format('YYYY-MM-DD'),
+      'You should be 18 years old'
+    )
+    .min(
+      // Member shold be 18 above
+      moment(new Date()).subtract(30, 'years').format('YYYY-MM-DD'),
+      'You should be 40 years old'
+    )
+    .required('Date of birth is required'),
+  relation: Yup.string().required('Relation is required'),
+  residentialAddress: Yup.string().required('Residential address is required'),
+  // churchMembership: Yup.string().required('Church membership is required'),
+  // pastorName: Yup.string().required('Pastor name is required'),
+  contactNumber: Yup.string().required('Contact number is required'),
+  // alternateNumber: Yup.string().required('Required'),
+  educationQualification: Yup.string().required(
+    'Education Qualification is required'
+  ),
+  occupation: Yup.string().required('Occupation is required'),
+  email: Yup.string()
+    .test(
+      'email',
+      'Email is invalid',
+      (value) =>
+        !value || /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)
+    )
+    .required('Email is required'),
+  nationality: Yup.string().required('Nationality is required'),
+  isMetricPass: Yup.boolean().required('Metric pass is required'),
+  accept: Yup.boolean().isTrue('Accept the terms and conditions'),
+  // For Files
+  idProof: Yup.mixed().required('ID Proof is required'),
+  markSheet: Yup.mixed().required('Mark sheet is required'),
+  passportPhoto: Yup.mixed().required('Passport photo is required'),
+  signature: Yup.mixed().required('Signature is required'),
+});
+
 export default function Home() {
-  const [loading, setLoading] = React.useState(false);
   const router = useRouter();
-  const docsPrefix = process.env.NEXT_PUBLIC_DOCUMENT_URL;
+  const [loading, setLoading] = React.useState(false);
   /**
    * Submit the form
    */
@@ -57,7 +110,13 @@ export default function Home() {
     async (value: State) => {
       setLoading(true);
       try {
-        const registrationNumber = generator(12);
+        // REGISTRATION NUMBER FORMAT
+        // Date of birth + 5 random numbers
+
+        const registrationNumber = generator(6);
+        const btm = moment(value.dateOfBirth).format('DDMMYYYY');
+        const registrationNumberFormat = `BTM-${btm}-${registrationNumber}`;
+
         const formData = new FormData();
         const docs = {
           get idProof() {
@@ -141,8 +200,9 @@ export default function Home() {
           nationality: value.nationality,
           isMetricPass: value.isMetricPass,
           accept: value.accept,
+          paymentStatus: PaymentStatus.PENDING,
           // Unique Number
-          registrationNumber,
+          registrationNumber: registrationNumberFormat,
         };
         console.log('PAYLOAD', payload);
         const files = {
@@ -180,39 +240,13 @@ export default function Home() {
   } = useFormik({
     initialValues: initialState,
     onSubmit: (values) => {
-      console.log(values);
       onSubmit(values);
     },
-    validationSchema: Yup.object().shape({
-      trainingCenter: Yup.string().required('Required'),
-      medium: Yup.string().required('Required'),
-      firstName: Yup.string().required('Required'),
-      lastName: Yup.string().required('Required'),
-      gender: Yup.string().required('Required'),
-      bloodGroup: Yup.string().required('Required'),
-      dateOfBirth: Yup.string().required('Required'),
-      relation: Yup.string().required('Required'),
-      residentialAddress: Yup.string().required('Required'),
-      churchMembership: Yup.string().required('Required'),
-      pastorName: Yup.string().required('Required'),
-      contactNumber: Yup.string().required('Required'),
-      alternateNumber: Yup.string().required('Required'),
-      educationQualification: Yup.string().required('Required'),
-      occupation: Yup.string().required('Required'),
-      email: Yup.string().email('Invalid email').required('Required'),
-      nationality: Yup.string().required('Required'),
-      isMetricPass: Yup.boolean().required('Required'),
-      accept: Yup.boolean().required('Required'),
-      // For Files
-      idProof: Yup.mixed().required('Required'),
-      markSheet: Yup.mixed().required('Required'),
-      passportPhoto: Yup.mixed().required('Required'),
-      signature: Yup.mixed().required('Required'),
-    }),
+    validationSchema: schema,
   });
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <React.Fragment>
       <div className=" flex  items-center justify-center h-32">
         <h1 className="mb-4 text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-6xl">
           <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
@@ -221,7 +255,6 @@ export default function Home() {
           Form
         </h1>
       </div>
-
       <form
         onSubmit={handleSubmit}
         style={{
@@ -229,7 +262,7 @@ export default function Home() {
           pointerEvents: loading ? 'none' : 'all',
         }}
       >
-        <div className="grid gap-6 mb-6 md:grid-cols-2">
+        <div className="grid gap-6 mb-6 md:grid-cols-2 mobile:gap-2">
           <div className="mb-6">
             <Select
               label="Training center"
@@ -299,7 +332,7 @@ export default function Home() {
           <Input
             type="email"
             label="Email"
-            placeholder="Enter your email"
+            placeholder="eg. example@gmail.com"
             name="email"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -398,6 +431,12 @@ export default function Home() {
             value={values.dateOfBirth}
             name="dateOfBirth"
             error={touched.dateOfBirth && errors.dateOfBirth}
+            // min={
+            //   new Date(new Date().setFullYear(new Date().getFullYear() - 18))
+            //     .toISOString()
+            //     .split('T')[0]
+            // }
+            max={new Date().toISOString().split('T')[0]}
           />
         </div>
 
@@ -450,7 +489,11 @@ export default function Home() {
             label="Contact Number"
             placeholder="Contact Number"
             name="contactNumber"
-            onChange={handleChange}
+            onChange={({ target }) => {
+              if (acceptNumbers(values.contactNumber)) {
+                setFieldValue('contactNumber', target.value);
+              }
+            }}
             onBlur={handleBlur}
             value={values.contactNumber}
             error={touched.contactNumber && errors.contactNumber}
@@ -460,7 +503,11 @@ export default function Home() {
             label="Alternate Number"
             placeholder="Alternate Number"
             name="alternateNumber"
-            onChange={handleChange}
+            onChange={({ target }) => {
+              if (acceptNumbers(values.alternateNumber)) {
+                setFieldValue('alternateNumber', target.value);
+              }
+            }}
             onBlur={handleBlur}
             value={values.alternateNumber}
             error={touched.alternateNumber && errors.alternateNumber}
@@ -478,11 +525,15 @@ export default function Home() {
             }
           />
           <Input
-            type="tel"
+            type="text"
             label="Occupation"
             placeholder="Ex: Student"
             name="occupation"
-            onChange={handleChange}
+            onChange={({ target }) => {
+              if (acceptString(target.value)) {
+                setFieldValue('occupation', target.value);
+              }
+            }}
             onBlur={handleBlur}
             value={values.occupation}
             error={touched.occupation && errors.occupation}
@@ -584,14 +635,17 @@ export default function Home() {
           />
         </div>
 
-        <div className="flex items-start mb-6">
+        <div className="flex items-start mb-2">
           <div className="flex items-center h-5">
             <Input
               id="remember"
               type="checkbox"
               name="accept"
-              onChange={handleChange}
-              value={values.accept?.toString() ?? ''}
+              onChange={({ target }) => {
+                setFieldValue('accept', target.checked);
+                // console.log(target.checked);
+              }}
+              checked={values.accept}
               className="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded"
             />
           </div>
@@ -610,18 +664,20 @@ export default function Home() {
           </label>
         </div>
         {touched.accept && errors.accept && (
-          <div className="flex  w-full mt-2 ">
+          <div className="flex  w-full my-2 ">
             <p className="text-red-500 text-sm">{errors.accept}</p>
           </div>
         )}
-        <button
-          type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-        >
-          {loading ? 'Submitting...' : 'Submit'}
-        </button>
+        <div className="flex items-center justify-center w-full">
+          <button
+            type="submit"
+            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+          >
+            {loading ? 'Submitting...' : 'Submit'}
+          </button>
+        </div>
       </form>
-    </main>
+    </React.Fragment>
   );
 }
 

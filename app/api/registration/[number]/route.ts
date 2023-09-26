@@ -30,22 +30,22 @@ export async function GET(_request: Request, { params }: Params) {
 
 export async function PUT(request: Request, { params }: Params) {
   const { client } = await connectToMongo();
-  console.log({ params });
   try {
     const body = await request.json();
-    console.log({ body });
     const response = client
       .db()
       .collection(collection)
       .updateOne(
-        { number: params.number },
+        { registrationNumber: params.number },
         {
-          $setOnInsert: {
+          $set: {
             paymentScreenshot: body.paymentScreenshot,
+            paymentStatus: body.paymentStatus,
           },
           $currentDate: { lastModified: true },
         }
       );
+
     return NextResponse.json({
       message: 'success',
       response,
@@ -65,7 +65,7 @@ export async function DELETE(request: Request, { params }: Params) {
     const response = client
       .db()
       .collection(collection)
-      .deleteOne({ number: params.number });
+      .deleteOne({ registrationNumber: params.number });
     return NextResponse.json({
       message: 'success',
       response,

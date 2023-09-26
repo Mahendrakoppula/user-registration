@@ -10,7 +10,7 @@ const Wraper = (props: InputFieldProps) => {
     <div className={`${props.className} flex flex-col`}>
       <label
         htmlFor={props.id}
-        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        className="block mb-2 text-sm font-medium text-gray-900"
       >
         {props.label}
       </label>
