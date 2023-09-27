@@ -161,6 +161,14 @@ const PaymentPage = () => {
               type="file"
               name="paymentScreenshot"
               onChange={({ target }) => {
+                // NOT MORE THEN 1MB
+                if (target.files) {
+                  if (target.files[0].size > 1000000) {
+                    alert('File size should be less than 1MB');
+                    return;
+                  }
+                  return;
+                }
                 if (target.files) {
                   setFieldValue(target.name, target.files[0]);
                 }

@@ -188,8 +188,8 @@ export default function Home() {
         const payload = {
           trainingCenter: value.trainingCenter,
           medium: value.medium,
-          firstName: value.firstName,
-          lastName: value.lastName,
+          firstName: value.firstName.trim(),
+          lastName: value.lastName.trim(),
           gender: value.gender,
           bloodGroup: value.bloodGroup,
           dateOfBirth: value.dateOfBirth,
@@ -249,6 +249,15 @@ export default function Home() {
     },
     validationSchema: schema,
   });
+
+  const onKeyDown = React.useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'e') {
+        e.preventDefault();
+      }
+    },
+    []
+  );
 
   return (
     <React.Fragment>
@@ -316,7 +325,7 @@ export default function Home() {
             placeholder="John"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={removeSpace(values.firstName)}
+            value={values.firstName}
             error={touched.firstName && errors.firstName}
           />
           <Input
@@ -327,17 +336,20 @@ export default function Home() {
             placeholder="Doe"
             onChange={handleChange}
             onBlur={handleBlur}
-            value={removeSpace(values.lastName)}
+            value={values.lastName}
             error={touched.lastName && errors.lastName}
           />
         </div>
         <div className="mb-6">
           <Input
-            type="email"
+            type="text"
             label="Email"
             placeholder="eg. example@gmail.com"
             name="email"
-            onChange={handleChange}
+            onChange={(event) => {
+              const value = event.target.value;
+              setFieldValue('email', removeSpace(value));
+            }}
             onBlur={handleBlur}
             value={removeSpace(values.email)}
             error={touched.email && errors.email}
@@ -354,11 +366,12 @@ export default function Home() {
             value={values.nationality}
             error={touched.nationality && errors.nationality}
           />
+
           <Input
             type="text"
-            label="Relation"
+            label="S/O or W/O or D/O"
             id="s/o_or_w/o_d/o"
-            placeholder="S/o or W/o or D/o"
+            placeholder="S/O or W/O or D/O"
             name="relation"
             onChange={handleChange}
             onBlur={handleBlur}
@@ -488,34 +501,36 @@ export default function Home() {
           />
 
           <Input
-            type="text"
+            min={0}
+            type="number"
             label="Contact Number"
             placeholder="Contact Number"
             name="contactNumber"
             onChange={({ target }) => {
-              if (acceptNumbers(values.contactNumber)) {
-                setFieldValue('contactNumber', target.value);
-              }
+              setFieldValue('contactNumber', target.value);
             }}
             onBlur={handleBlur}
             value={values.contactNumber}
             error={touched.contactNumber && errors.contactNumber}
             maxLength={11}
+            onKeyDown={onKeyDown}
+            max={99999999999}
           />
           <Input
-            type="text"
+            min={0}
+            type="number"
             label="Alternate Number"
             placeholder="Alternate Number"
             name="alternateNumber"
             onChange={({ target }) => {
-              if (acceptNumbers(values.alternateNumber)) {
-                setFieldValue('alternateNumber', target.value);
-              }
+              setFieldValue('alternateNumber', target.value);
             }}
             onBlur={handleBlur}
             value={values.alternateNumber}
             error={touched.alternateNumber && errors.alternateNumber}
             maxLength={11}
+            onKeyDown={onKeyDown}
+            max={99999999999}
           />
           <Input
             type="text"

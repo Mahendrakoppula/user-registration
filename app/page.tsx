@@ -25,6 +25,11 @@ export default function Home() {
         if (data.response) {
           setState(data.response);
         }
+        if (data.response === null) {
+          setState(null);
+          alert('No result found');
+        }
+
         onLoading(false);
       } catch (error) {
         console.log(error);
