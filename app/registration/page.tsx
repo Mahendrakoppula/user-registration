@@ -624,14 +624,14 @@ export default function Home() {
             placeholder="10th certificate"
             onChange={({ target }) => {
               const file = (target.files && target.files[0]) as File;
-              if (checkFileSize(file, 'File size should be less than 2MB')) {
+              if (checkFileSize(file, 'File size should be less than 1MB')) {
                 if (file) {
                   setFieldValue(target.name, file);
                 }
               }
             }}
             accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, image/jpeg, image/png"
-            caption="Supported formats: pdf, doc, docx, jpg, jpeg, png. Max file size 2Mb"
+            caption="Supported formats: pdf, doc, docx, jpg, jpeg, png. Max file size 1Mb"
             error={touched.markSheet && errors.markSheet}
           />
           <Input
@@ -641,14 +641,14 @@ export default function Home() {
             placeholder="PassPort size photo"
             onChange={({ target }) => {
               const file = (target.files && target.files[0]) as File;
-              if (checkFileSize(file, 'File size should be less than 2MB')) {
+              if (checkFileSize(file, 'File size should be less than 1MB')) {
                 if (file) {
                   setFieldValue(target.name, file);
                 }
               }
             }}
             accept="image/png, image/jpeg, image/jpg, image/webp"
-            caption="PNG, JPG, WEBP up to 2MB"
+            caption="PNG, JPG, WEBP up to 1MB"
             error={touched.passportPhoto && errors.passportPhoto}
           />
           <Input
@@ -658,7 +658,7 @@ export default function Home() {
             placeholder="Signature"
             onChange={({ target }) => {
               const file = (target.files && target.files[0]) as File;
-              if (checkFileSize(file, 'File size should be less than 2MB')) {
+              if (checkFileSize(file, 'File size should be less than 1MB')) {
                 if (file) {
                   setFieldValue(target.name, file);
                 }
@@ -741,7 +741,8 @@ const trainingCenters = [
 
 const checkFileSize = (file: File, message: string) => {
   if (!file) return false;
-  if (file.size > 2000000) {
+  // Less than 1MB
+  if (file.size > 1000000) {
     alert(message);
     return false;
   }
