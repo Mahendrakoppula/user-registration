@@ -1,4 +1,5 @@
 'use client';
+import DefaultLayout from '@/components/layout/default';
 import LiveIcon from '@/components/live-badge';
 import useLoading from '@/hooks/use-loading';
 import { PaymentStatus } from '@/typings/payment';
@@ -117,7 +118,7 @@ export default function Home() {
   }, []);
 
   return (
-    <React.Fragment>
+    <DefaultLayout>
       <div className="flex  items-center justify-center h-32">
         <h1 className="text-center mb-4 text-3xl font-extrabold text-gray-900  md:text-5xl lg:text-6xl">
           <span className=" text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
@@ -245,7 +246,7 @@ export default function Home() {
           </svg>
         </Link>
       </p>
-    </React.Fragment>
+    </DefaultLayout>
   );
 }
 

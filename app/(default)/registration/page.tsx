@@ -100,10 +100,10 @@ const schema = Yup.object().shape({
   isMetricPass: Yup.boolean().required('Metric pass is required'),
   accept: Yup.boolean().isTrue('Accept the terms and conditions'),
   // For Files
-  // idProof: Yup.mixed().required('ID Proof is required'),
-  // markSheet: Yup.mixed().required('Mark sheet is required'),
-  // passportPhoto: Yup.mixed().required('Passport photo is required'),
-  // signature: Yup.mixed().required('Signature is required'),
+  idProof: Yup.mixed().required('ID Proof is required'),
+  markSheet: Yup.mixed().required('Mark sheet is required'),
+  passportPhoto: Yup.mixed().required('Passport photo is required'),
+  signature: Yup.mixed().required('Signature is required'),
 });
 
 export default function Home() {
@@ -224,7 +224,10 @@ export default function Home() {
         });
         console.log('DONE WITH NO ERROR', data);
         setLoading(false);
-        router.push(`/payment?registration=${data.registrationNumber}`);
+        // router.push(`/payment?registration=${data.registrationNumber}`);
+        router.push(
+          `/(default)/payment?registration=${data.registrationNumber})`
+        );
       } catch (error) {
         setLoading(false);
         console.log(error);

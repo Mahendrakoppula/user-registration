@@ -1,11 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
 // Opt out of caching for all data requests in the route segment
-// export const dynamic = 'force-dynamic';
-'use client';
-import axios from 'axios';
+export const dynamic = 'force-dynamic';
+
+import Link from 'next/link';
 import React from 'react';
 
-async function getRegistration() {
+async function getRegistrations() {
   try {
     const data = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/registration`
@@ -17,34 +17,28 @@ async function getRegistration() {
   }
 }
 
-const Dashboard = () => {
-  React.useEffect(() => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/registration`)
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+const Dashboard = async () => {
+  const data = (await getRegistrations()) as Registration[];
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="w-full text-sm text-left text-gray-500 ">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50  ">
           <tr>
             <th scope="col" className="px-6 py-3">
-              Product name
+              Registration ID
             </th>
             <th scope="col" className="px-6 py-3">
-              Color
+              Name
             </th>
             <th scope="col" className="px-6 py-3">
-              Category
+              Email
             </th>
             <th scope="col" className="px-6 py-3">
-              Price
+              Contact Number
+            </th>
+            <th scope="col" className="px-6 py-3">
+              Payment Status
             </th>
             <th scope="col" className="px-6 py-3">
               <span className="sr-only">Edit</span>
@@ -52,66 +46,71 @@ const Dashboard = () => {
           </tr>
         </thead>
         <tbody>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              Apple MacBook Pro 17"
-            </th>
-            <td className="px-6 py-4">Silver</td>
-            <td className="px-6 py-4">Laptop</td>
-            <td className="px-6 py-4">$2999</td>
-            <td className="px-6 py-4 text-right">
-              <a
-                href="#"
-                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                Edit
-              </a>
-            </td>
-          </tr>
-          <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              Microsoft Surface Pro
-            </th>
-            <td className="px-6 py-4">White</td>
-            <td className="px-6 py-4">Laptop PC</td>
-            <td className="px-6 py-4">$1999</td>
-            <td className="px-6 py-4 text-right">
-              <a
-                href="#"
-                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                Edit
-              </a>
-            </td>
-          </tr>
-          <tr className="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <th
-              scope="row"
-              className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-            >
-              Magic Mouse 2
-            </th>
-            <td className="px-6 py-4">Black</td>
-            <td className="px-6 py-4">Accessories</td>
-            <td className="px-6 py-4">$99</td>
-            <td className="px-6 py-4 text-right">
-              <a
-                href="#"
-                className="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >
-                Edit
-              </a>
-            </td>
-          </tr>
+          {data.length > 0 &&
+            data.map((item, index) => {
+              return (
+                <tr
+                  key={index}
+                  className="bg-white border-b  hover:bg-gray-50  "
+                >
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap  "
+                  >
+                    {item.registrationNumber}
+                  </th>
+                  <td className="px-6 py-4">
+                    {item.firstName + ' ' + item.lastName}
+                  </td>
+                  <td className="px-6 py-4">{item.email}</td>
+                  <td className="px-6 py-4">{item.contactNumber}</td>
+                  <td className="px-6 py-4">{item.paymentStatus}</td>
+
+                  <td className="px-6 py-4 text-right">
+                    <Link
+                      href={`/admin/${item.registrationNumber}`}
+                      className="font-medium text-blue-600  hover:underline"
+                    >
+                      Edit
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </div>
   );
 };
 export default Dashboard;
+
+type Registration = {
+  _id: string;
+  trainingCenter: string;
+  medium: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  bloodGroup: string;
+  dateOfBirth: string;
+  relation: string;
+  residentialAddress: string;
+  churchMembership: string;
+  pastorName: string;
+  contactNumber: string;
+  alternateNumber: string;
+  educationQualification: string;
+  occupation: string;
+  email: string;
+  nationality: string;
+  isMetricPass: boolean;
+  accept: boolean;
+  paymentStatus: null;
+  registrationNumber: string;
+  idProof: string;
+  markSheet: string;
+  passportPhoto: string;
+  signature: string;
+  lastModified: string;
+  paymentScreenshot: string;
+};

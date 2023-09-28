@@ -11,6 +11,7 @@ import useLoading from '@/hooks/use-loading';
 import { useRouter } from 'next/navigation';
 import CopyIcon from '@/components/icons/CopyIcon';
 import CheckIcon from '@/components/icons/CheckIcon';
+import { PaymentStatus } from '@/typings/payment';
 
 type State = {
   paymentScreenshot: File | null;
@@ -60,7 +61,7 @@ const PaymentPage = () => {
             url: `/api/registration/${registration}`,
             data: {
               paymentScreenshot: url,
-              // paymentStatus: PaymentStatus.APPORVED,
+              paymentStatus: PaymentStatus.PENDING,
             },
           });
           console.log('Payment Screenshot Uploaded', data);
@@ -69,7 +70,7 @@ const PaymentPage = () => {
         }
         onLoading(false);
         alert('Payment Screenshot Uploaded Successfully, Thank You!');
-        router.push('/');
+        router.replace('/');
       } catch (error) {
         console.log(error);
         onLoading(false);
@@ -86,7 +87,7 @@ const PaymentPage = () => {
     },
     onSubmit,
     validationSchema: Yup.object().shape({
-      paymentScreenshot: Yup.mixed().required('Required'),
+      paymentScreenshot: Yup.mixed().required('Payment Screenshot is required'),
     }),
   });
   // Copy to clipboard

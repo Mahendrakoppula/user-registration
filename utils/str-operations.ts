@@ -15,3 +15,8 @@ export const removeSpace = (value: string) => {
   const regex = new RegExp(/\s/g);
   return value.replace(regex, '');
 };
+
+export function isUrl(string: any) {
+  const regex = RegExp(/^(https?| ftp):\/\/[^\s/$.?#/][^\s]*$/i);
+  return regex.test(string);
+}
