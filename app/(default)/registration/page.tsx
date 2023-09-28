@@ -225,9 +225,7 @@ export default function Home() {
         console.log('DONE WITH NO ERROR', data);
         setLoading(false);
         // router.push(`/payment?registration=${data.registrationNumber}`);
-        router.push(
-          `/(default)/payment?registration=${data.registrationNumber})`
-        );
+        router.push(`/payment?registration=${data.registrationNumber})`);
       } catch (error) {
         setLoading(false);
         console.log(error);
