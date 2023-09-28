@@ -100,10 +100,10 @@ const schema = Yup.object().shape({
   isMetricPass: Yup.boolean().required('Metric pass is required'),
   accept: Yup.boolean().isTrue('Accept the terms and conditions'),
   // For Files
-  idProof: Yup.mixed().required('ID Proof is required'),
-  markSheet: Yup.mixed().required('Mark sheet is required'),
-  passportPhoto: Yup.mixed().required('Passport photo is required'),
-  signature: Yup.mixed().required('Signature is required'),
+  // idProof: Yup.mixed().required('ID Proof is required'),
+  // markSheet: Yup.mixed().required('Mark sheet is required'),
+  // passportPhoto: Yup.mixed().required('Passport photo is required'),
+  // signature: Yup.mixed().required('Signature is required'),
 });
 
 export default function Home() {
@@ -742,7 +742,7 @@ const trainingCenters = [
 const checkFileSize = (file: File, message: string) => {
   if (!file) return false;
   // Less than 1MB
-  if (file.size > 1000000) {
+  if (file.size > 900000) {
     alert(message);
     return false;
   }
