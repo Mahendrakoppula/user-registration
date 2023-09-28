@@ -167,7 +167,6 @@ const PaymentPage = () => {
                     alert('File size should be less than 1MB');
                     return;
                   }
-                  return;
                 }
                 if (target.files) {
                   setFieldValue(target.name, target.files[0]);

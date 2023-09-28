@@ -18,6 +18,7 @@ import {
   removeSpace,
 } from '@/utils/str-operations';
 import { PaymentStatus } from '@/typings/payment';
+import FilePicker from '@/components/file-picker';
 
 const characters = Array.from({ length: 10 }, (_, i) => i).join('');
 
@@ -595,6 +596,8 @@ export default function Home() {
             </div>
           )}
         </div>
+
+        {/* <FilePicker label="ID Proof( Aadhar/Driving license/Passsport )" /> */}
 
         <div className="grid gap-6 mb-6">
           <Input
