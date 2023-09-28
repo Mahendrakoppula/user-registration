@@ -605,11 +605,11 @@ export default function Home() {
             name="idProof"
             label="Id Proof( Aadhar/Driving license/Passsport )"
             placeholder="Id Proof( Aadhar/Driving license/Passsport )"
-            caption="Supported formats: pdf, doc, docx, jpg, jpeg, png. Max file size 2Mb"
+            caption="Supported formats: pdf, doc, docx, jpg, jpeg, png. Max file size 1Mb"
             accept="image/png, image/jpeg, image/jpg, image/webp, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document"
             onChange={({ target }) => {
               const file = (target.files && target.files[0]) as File;
-              if (checkFileSize(file, 'File size should be less than 2MB')) {
+              if (checkFileSize(file, 'File size should be less than 1MB')) {
                 if (file) {
                   setFieldValue(target.name, file);
                 }
