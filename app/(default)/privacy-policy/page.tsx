@@ -18,209 +18,150 @@ export default function Home() {
         "
           id="1-definitions"
         >
-          1. Definitions
+          1. Information We Collect
         </h3>
         <p className="text-gray-600 ">
-          Coach: A certified and experienced professional who provides coaching
-          services to clients. Client: An individual who has enrolled in
-          coaching services from [Coaching Center Name]. Coaching Services: The
-          services provided by [Coaching Center Name], including individual
-          coaching sessions, group coaching sessions, workshops, and other
-          related services.
+          We may collect the following categories of personal information:
+          <p className="text-gray-600  font-bold">
+             Contact Information:
+          </p>{' '}
+          This includes your name, email address, phone number, and mailing
+          address.
+          <p className="text-gray-600  font-bold">
+             Student Identification:
+          </p>{' '}
+          We may collect student identification numbers or usernames to verify
+          your identity within our system.
+          <p className="text-gray-600  font-bold">
+             Academic Information:
+          </p>{' '}
+          This includes details about your current educational institution,
+          major, and year of study.
+          <p className="text-gray-600  font-bold">
+             Course Registration Details:
+          </p>{' '}
+          Information related to the courses you register for, including course
+          names, dates, times, and fees.
+          <p className="text-gray-600  font-bold">1.5. Payment Information: </p>
+          We may collect payment details such as credit card numbers, billing
+          addresses, and transaction history, but this information is securely
+          processed by our payment service provider and is not stored on our
+          servers.
+          <p className="text-gray-600  font-bold">
+             Communication Preferences:
+          </p>{' '}
+          Information regarding your communication preferences, including
+          subscription to newsletters and updates.
+          <p className="text-gray-600  font-bold">
+             Device and Usage Information:{' '}
+          </p>
+          We may automatically collect information about your device and how you
+          use our website, including your IP address, browser type, and
+          operating system.
         </p>
         <h3
           className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
         "
           id="2-acceptance-of-terms-and-conditions"
         >
-          2. Acceptance of Terms and Conditions
+          2. How We Use Your Information
         </h3>
         <p className="text-gray-600 ">
-          By enrolling in coaching services from [Coaching Center Name], the
-          client agrees to be bound by these terms and conditions.
+          We use your personal information for the following purposes:
+          <p className="text-gray-600  font-bold"> Course Registration: </p>
+          To facilitate your course registration and manage your enrollment.
+          <p className="text-gray-600  font-bold"> Communication: </p>To
+          communicate with you regarding course updates, schedules, and
+          administrative matters.
+          <p className="text-gray-600  font-bold"> Customer Support:</p> To
+          provide customer support and respond to your inquiries.
+          <p className="text-gray-600  font-bold"> Analytics:</p> To analyze
+          and improve our Services, including user experience and course
+          offerings.
+          <p className="text-gray-600  font-bold"> Marketing:</p> To send
+          you promotional materials and updates about our courses and services
+          if you have consented to receive such communications.
         </p>
         <h3
           className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
         "
           id="3-scope-of-services"
         >
-          3. Scope of Services
+          3. Disclosure of Your Information
         </h3>
         <p className="text-gray-600 ">
-          The scope of coaching services to be provided to the client will be as
-          agreed upon in the client's coaching agreement. The coach may modify
-          the scope of services at any time, at their discretion, and the client
-          will be notified of any such modifications.
+          We may share your personal information with the following parties:
+          <p className="text-gray-600  font-bold"> Instructors:</p> Your
+          information may be shared with instructors for course-related
+          communication and administration.
+          <p className="text-gray-600  font-bold"> Service Providers: </p>We
+          may engage third-party service providers to assist with technical,
+          administrative, or marketing functions, and they may have access to
+          your personal information only to the extent necessary to perform
+          their functions.
+          <p className="text-gray-600  font-bold"> Legal Compliance:</p> We
+          may disclose your information to comply with legal obligations,
+          respond to legal requests, or protect our rights and the rights of
+          others.
         </p>
         <h3
           className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
         "
           id="4-fees-and-payment"
         >
-          4. Fees and Payment
+          4. Security
         </h3>
         <p className="text-gray-600 ">
-          The client agrees to pay the coaching fees as set forth in their
-          coaching agreement. Coaching fees are non-refundable.
+          We implement appropriate technical and organizational measures to
+          safeguard your personal information from unauthorized access and
+          disclosure. However, no data transmission over the internet is
+          entirely secure, and we cannot guarantee the absolute security of your
+          information.
         </p>
         <h3
           className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
         "
           id="5-cancellation-and-rescheduling"
         >
-          5. Cancellation and Rescheduling
+          5. Your Choices
         </h3>
         <p className="text-gray-600 ">
-          The client may cancel or reschedule a coaching session at least 24
-          hours in advance without penalty. If the client cancels or reschedules
-          a coaching session with less than 24 hours notice, the full fee for
-          the session will be charged.
+          You have the following rights regarding your personal information:
+          <p className="text-gray-600  font-bold"> Access: </p>You can
+          request access to the personal information we hold about you.
+          <p className="text-gray-600  font-bold"> Correction: </p>You can
+          request corrections to your personal information if it is inaccurate
+          or incomplete.
+          <p className="text-gray-600  font-bold"> Withdraw Consent:</p> You
+          can withdraw your consent for marketing communications at any time.
+          <p className="text-gray-600  font-bold"> Deletion: </p>You can
+          request the deletion of your personal information, subject to legal
+          requirements.
         </p>
         <h3
           className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
         "
           id="6-confidentiality"
         >
-          6. Confidentiality
+          6. Contact Us
         </h3>
         <p className="text-gray-600 ">
-          The coach will maintain the confidentiality of all information shared
-          by the client during coaching sessions. The coach will not share any
-          client information with third parties without the client's written
-          consent.
+          If you have any questions, concerns, or requests related to this
+          Privacy Policy or your personal information, please contact us at:
         </p>
         <h3
           className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
         "
           id="7-intellectual-property"
         >
-          7. Intellectual Property
+          7. Changes to this Policy
         </h3>
         <p className="text-gray-600 ">
-          All intellectual property created by the coach during the course of
-          coaching the client, including coaching materials, exercises, and
-          tools, is the sole property of the coach. The client may not use or
-          reproduce any such intellectual property without the coach's written
-          consent.
-        </p>
-        <h3
-          className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
-        "
-          id="8-limitations-of-liability"
-        >
-          8. Limitations of Liability
-        </h3>
-        <p className="text-gray-600 ">
-          [Coaching Center Name] and its coaches are not liable for any damages,
-          including direct, indirect, incidental, special, or consequential
-          damages, arising out of the coaching services.
-        </p>
-        <h3
-          className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
-        "
-          id="9-dispute-resolution"
-        >
-          9. Dispute Resolution
-        </h3>
-        <p className="text-gray-600 ">
-          Any disputes arising out of these terms and conditions or the coaching
-          services will be resolved through binding arbitration in accordance
-          with the rules of the American Arbitration Association.
-        </p>
-        <h3
-          className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
-        "
-          id="10-governing-law"
-        >
-          10. Governing Law
-        </h3>
-        <p className="text-gray-600 ">
-          These terms and conditions and the coaching services will be governed
-          by and construed in accordance with the laws of the State of [State].
-        </p>
-        <h3
-          className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
-        "
-          id="11-entire-agreement"
-        >
-          11. Entire Agreement
-        </h3>
-        <p className="text-gray-600 ">
-          These terms and conditions constitute the entire agreement between the
-          parties with respect to the coaching services and supersede all prior
-          or contemporaneous communications, representations, or agreements,
-          whether oral or written.
-        </p>
-        <h3
-          className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
-        "
-          id="12-severability"
-        >
-          12. Severability
-        </h3>
-        <p className="text-gray-600 ">
-          If any provision of these terms and conditions is held to be invalid
-          or unenforceable, such provision will be struck from these terms and
-          conditions and the remaining provisions will remain in full force and
-          effect.
-        </p>
-        <h3
-          className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
-        "
-          id="13-waiver"
-        >
-          13. Waiver
-        </h3>
-        <p className="text-gray-600 ">
-          No waiver of any provision of these terms and conditions will be
-          effective unless in writing and signed by both parties.
-        </p>
-        <h3
-          className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
-        "
-          id="14-notices"
-        >
-          14. Notices
-        </h3>
-        <p className="text-gray-600 ">
-          All notices and other communications under these terms and conditions
-          must be in writing and sent by certified mail, return receipt
-          requested, to the following addresses:
-        </p>
-        <p className="text-gray-600 ">
-          {' '}
-          If to [Coaching Center Name]: [Coaching Center Name] [Address]
-        </p>
-        <p className="text-gray-600 ">
-          {' '}
-          If to the client: [Client Name] [Address]
-        </p>
-        <p className="text-gray-600 ">
-          or to such other address as either party may designate in writing from
-          time to time.
-        </p>
-        <h3
-          className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
-        "
-          id="15-headings"
-        >
-          15. Headings
-        </h3>
-        <p className="text-gray-600 ">
-          The headings in these terms and conditions are for convenience only
-          and will not affect their interpretation.
-        </p>
-        <h3
-          className="text-xl font-medium text-gray-800 md:text-2xl lg:text-2xl
-        "
-          id="16-counterparts"
-        >
-          16. Counterparts
-        </h3>
-        <p className="text-gray-600 ">
-          These terms and conditions may be executed in one or more
-          counterparts, each of which will be deemed an original, but all of
-          which together will constitute one and the same instrument.
+          We may update this Privacy Policy from time to time to reflect changes
+          in our practices or legal requirements. Any updates will be posted on
+          our website, and the revised policy will be effective upon the posting
+          date. By registering for our courses, you acknowledge and agree to
+          this Privacy Policy.
         </p>
       </div>
     </React.Fragment>
